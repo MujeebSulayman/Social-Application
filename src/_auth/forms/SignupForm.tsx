@@ -19,24 +19,18 @@ import {
 	useCreateUserAccount,
 	useSignInAccount,
 } from '@/lib/react-query/queriesAndMutations';
-import { useUserContext } from '@/context/authContext';
-import { title } from 'process';
+import { useUserContext } from '@/context/AuthContext';
 
 const SignupForm = () => {
 	const { toast } = useToast();
 	const { checkAuthUser, isLoading: isUserLoading } = useUserContext();
 	const navigate = useNavigate();
 
-
-
-	
 	const { mutateAsync: createUserAccount, isPending: isCreatingAccount } =
 		useCreateUserAccount();
 
 	const { mutateAsync: signInAccount, isPending: isSigningIn } =
 		useSignInAccount();
-
-
 
 	const form = useForm<z.infer<typeof SignupValidation>>({
 		resolver: zodResolver(SignupValidation),
@@ -67,8 +61,8 @@ const SignupForm = () => {
 		if (isLoggedIn) {
 			form.reset();
 			navigate('/');
-		}else{
-		return toast( {title: 'Sign up failed. Please try again.'})
+		} else {
+			return toast({ title: 'Sign up failed. Please try again.' });
 		}
 	}
 	return (

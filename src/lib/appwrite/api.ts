@@ -1,8 +1,8 @@
-import { ID } from 'appwrite';
+import { ID, Query } from 'appwrite';
 
 import { INewUser } from '@/types';
 import { account, appwriteConfig, avatars, databases } from './config';
-import { Query } from '@tanstack/react-query';
+
 
 // ============================== SIGN UP
 export async function createUserAccount(user: INewUser) {
@@ -70,7 +70,7 @@ export async function signInAccount(user: { email: string; password: string }) {
 // ============================== GET USER
 export async function getCurrentUser() {
   try {
-    const currentAccount = await getAccount();
+    const currentAccount = await account.get();
 
     if (!currentAccount) throw Error;
 

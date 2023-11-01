@@ -16,14 +16,14 @@ import { SigninValidation } from '@/lib/validation';
 import { z } from 'zod';
 import Loader from '@/components/ui/shared/Loader';
 import { useSignInAccount } from '@/lib/react-query/queriesAndMutations';
-import { useUserContext } from '@/context/authContext';
+import { useUserContext } from '@/context/AuthContext';
 
 const SigninForm = () => {
 	const { toast } = useToast();
 	const { checkAuthUser, isLoading: isUserLoading } = useUserContext();
 	const navigate = useNavigate();
 
-	const { mutateAsync: signInAccount, isPending } = useSignInAccount();
+	const { mutateAsync: signInAccount } = useSignInAccount();
 
 	const form = useForm<z.infer<typeof SigninValidation>>({
 		resolver: zodResolver(SigninValidation),
@@ -34,7 +34,7 @@ const SigninForm = () => {
 	});
 
 	// 2. Define a submit handler.
-  const handleSignin = async (user: z.infer<typeof SigninValidation>) => {
+	const handleSignin = async (user: z.infer<typeof SigninValidation>) => {
 		const session = await signInAccount(user);
 
 		if (!session) {
@@ -116,7 +116,7 @@ const SigninForm = () => {
 								<Loader /> Loading...
 							</div>
 						) : (
-							'Sign up'
+							'Sign in'
 						)}
 					</Button>
 					<p className='text-small-regular text-light-2 text-center mt-2'>
