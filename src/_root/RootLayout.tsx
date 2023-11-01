@@ -1,7 +1,9 @@
 const RootLayout = () => {
   return (
     <div>
-     RootLayout
+     <button>
+      <a href="/sign-in">Click me</a>
+     </button>
     </div>
   )
 }
