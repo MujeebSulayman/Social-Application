@@ -6,6 +6,17 @@ import Home from './_root/pages/Home';
 import './globals.css';
 import { Routes, Route } from 'react-router-dom';
 import { Toaster } from '@/components/ui/toaster';
+import {
+	AllUsers,
+	EditPost,
+	PostDetails,
+	Profile,
+	Saved,
+	UpdateProfile,
+	CreatePost,
+	Explore,
+} from './_root/pages';
+
 
 const App = () => {
 	return (
@@ -24,14 +35,47 @@ const App = () => {
 				</Route>
 				{/* PRIVATE ROUTES */}
 
-				<Route element={<RootLayout/>}>
+				<Route element={<RootLayout />}>
 					<Route
 						index
 						element={<Home />}
 					/>
+					<Route
+						path='/saved'
+						element={<Saved />}
+					/>
+					<Route
+						path='/explore'
+						element={<Explore />}
+					/>
+					<Route
+						path='/all-users'
+						element={<AllUsers />}
+					/>
+					<Route
+						path='/create-post'
+						element={<CreatePost />}
+					/>
+					<Route
+						path='/update-post/:id'
+						element={<EditPost />}
+					/>
+					<Route
+						path='/posts/:id'
+						element={<PostDetails />}
+					/>
+
+					<Route
+						path='/profile/:id/*'
+						element={<Profile />}
+					/>
+					<Route
+						path='/update-profile/:id'
+						element={<UpdateProfile />}
+					/>
 				</Route>
 			</Routes>
-			<Toaster/>
+			<Toaster />
 		</main>
 	);
 };

@@ -10,7 +10,7 @@ const Topbar = () => {
 	useEffect(() => {
 		if (isSuccess) navigate(0);
 	}, [isSuccess]);
-	const { user } = useUserContext()
+	const { user } = useUserContext();
 
 	return (
 		<section className='topbar'>
@@ -42,7 +42,7 @@ const Topbar = () => {
 						<img
 							src={user.imageUrl || '/assets/images/profile-placeholder.JPG'}
 							alt='avatar'
-              className='h-10 w-10 rounded-full'
+							className='h-10 w-10 rounded-full'
 						/>
 					</Link>
 				</div>
