@@ -12,24 +12,28 @@ import {
 } from '@/components/ui/form';
 import { Textarea } from '../textarea';
 import FileUploader from '../shared/FileUploader';
-import { Input } from '../input';
 
-const formSchema = z.object({
-	username: z.string().min(2, {
-		message: 'Username must be at least 2 characters.',
-	}),
-});
+import { PostValidation } from '@/lib/validation';
+import { Models } from 'appwrite';
+import { Input } from '@/components/ui/input';
 
-const PostForm = () => {
-	const form = useForm<z.infer<typeof formSchema>>({
-		resolver: zodResolver(formSchema),
+type PostFormProps = {
+	post?: Models.Document;
+};
+
+const PostForm = ({ post }: PostFormProps) => {
+	const form = useForm<z.infer<typeof PostValidation>>({
+		resolver: zodResolver(PostValidation),
 		defaultValues: {
-			username: '',
+			caption: post ? post?.caption : '',
+			file: [],
+			location: post ? post.location : '',
+			tags: post ? post?.tags.join(',') : '',
 		},
 	});
 
 	// 2. Define a submit handler.
-	function onSubmit(values: z.infer<typeof formSchema>) {
+	function onSubmit(values: z.infer<typeof PostValidation>) {
 		// Do something with the form values.
 		// ✅ This will be type-safe and validated.
 		console.log(values);
@@ -64,7 +68,10 @@ const PostForm = () => {
 						<FormItem>
 							<FormLabel className='shad-form_label'>Add Photos</FormLabel>
 							<FormLabel>
-								<FileUploader />
+								<FileUploader
+									fieldChange={field.onChange}
+									mediaUrl={post?.imageUrl}
+								/>
 							</FormLabel>
 
 							<FormMessage className='shad-form_message' />
@@ -81,6 +88,7 @@ const PostForm = () => {
 								<Input
 									className='shad-input'
 									type='text'
+									{...field}
 								/>
 							</FormLabel>
 
@@ -101,6 +109,7 @@ const PostForm = () => {
 									type='text'
 									className='shad-input '
 									placeholder='Art, Expression, Learn'
+									{...field}
 								/>
 							</FormControl>
 
