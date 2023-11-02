@@ -23,13 +23,13 @@ import { useUserContext } from '@/context/AuthContext';
 
 const SignupForm = () => {
 	const { toast } = useToast();
-	const { checkAuthUser } = useUserContext();
+	const { checkAuthUser, isLoading: isUserLoading } = useUserContext();
 	const navigate = useNavigate();
 
 	const { mutateAsync: createUserAccount, isPending: isCreatingAccount } =
 		useCreateUserAccount();
 
-	const { mutateAsync: signInAccount } =
+	const { mutateAsync: signInAccount, isPending: isSigningIn } =
 		useSignInAccount();
 
 	const form = useForm<z.infer<typeof SignupValidation>>({
