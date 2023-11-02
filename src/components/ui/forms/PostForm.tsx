@@ -9,11 +9,10 @@ import {
 	FormItem,
 	FormLabel,
 	FormMessage,
-	Input,
-	Textarea,
 } from '@/components/ui/form';
-
+import { Textarea } from '../textarea';
 import FileUploader from '../shared/FileUploader';
+import { Input } from '../input';
 
 const formSchema = z.object({
 	username: z.string().min(2, {
@@ -49,8 +48,7 @@ const PostForm = () => {
 							<FormLabel className='shad-form_label'>Caption</FormLabel>
 							<FormLabel>
 								<Textarea
-									className='shad-form_textarea custom-scrollbar'
-									placeholder='shadcn'
+									className='shad-input custom-scrollbar'
 									{...field}
 								/>
 							</FormLabel>
@@ -101,7 +99,7 @@ const PostForm = () => {
 							<FormControl>
 								<Input
 									type='text'
-									className='shad-inpu '
+									className='shad-input '
 									placeholder='Art, Expression, Learn'
 								/>
 							</FormControl>
@@ -110,7 +108,18 @@ const PostForm = () => {
 						</FormItem>
 					)}
 				/>
-				<Button type='submit'>Submit</Button>
+				<div className='flex gap-4 items-center justify-end'>
+					<Button
+						type='button'
+						className='shad-button_dark_4'>
+						Cancel
+					</Button>
+					<Button
+						type='submit'
+						className='shad-button_primary whitespace-nowrap'>
+						Submit
+					</Button>
+				</div>
 			</form>
 		</Form>
 	);
