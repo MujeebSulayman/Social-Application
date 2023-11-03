@@ -40,7 +40,7 @@ const Topbar = () => {
 						to={`/profile${user.id}`}
 						className='flex-center gap-3 mr-4'>
 						<img
-							src={user.imageUrl || '/assets/images/profile-placeholder.JPG'}
+							src={user.imageUrl || '/assets/icons/profile-placeholder.JPG'}
 							alt='avatar'
 							className='h-10 w-10 rounded-full'
 						/>
