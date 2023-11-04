@@ -2,14 +2,14 @@ import { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 
-
+import { useUserContext } from '@/context/AuthContext';
 import { useSignOutAccount } from '@/lib/react-query/queriesAndMutations';
 import { Button } from '../button';
 
 
 const Topbar = () => {
 	const navigate = useNavigate();
-
+	const { user } = useUserContext();
 	const { mutate: signOut, isSuccess } = useSignOutAccount();
 
 	useEffect(() => {
@@ -40,7 +40,15 @@ const Topbar = () => {
 							alt='logout'
 						/>
 					</Button>
-					
+					<Link
+						to='/sign-in'
+						className='flex-center gap-3'>
+						<img
+							src={user.imageUrl || '/assets/icons/profile-placeholder.svg'}
+							alt='profile'
+							className='h-8 w-8 rounded-full'
+						/>
+					</Link>
 				</div>
 			</div>
 		</section>
