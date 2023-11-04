@@ -2,7 +2,7 @@ import { Input } from '@/components/ui/input';
 import GridPostList from '@/components/ui/shared/GridPostList';
 import Loader from '@/components/ui/shared/Loader';
 import useDebounce from '@/hooks/useDebounce';
-import { useGetPosts, useSearchPosts } from '@/lib/react-query/queriesAndMutations';
+import {  useSearchPosts } from '@/lib/react-query/queriesAndMutations';
 import { useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 
@@ -28,7 +28,7 @@ const SearchResults = ({
 
 const Explore = () => {
 	const { ref, inView } = useInView();
-	const { data: posts, fetchNextPage, hasNextPage } = useGetPosts();
+
 
 	const [searchValue, setSearchValue] = useState('');
 	const debouncedSearch = useDebounce(searchValue, 500);
