@@ -14,7 +14,6 @@ import {
 	Saved,
 	UpdateProfile,
 	CreatePost,
-	Explore,
 } from './_root/pages';
 
 
@@ -44,10 +43,7 @@ const App = () => {
 						path='/saved'
 						element={<Saved />}
 					/>
-					<Route
-						path='/explore'
-						element={<Explore />}
-					/>
+					
 					<Route
 						path='/all-users'
 						element={<AllUsers />}
