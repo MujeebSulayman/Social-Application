@@ -3,7 +3,7 @@ import Loader from './Loader';
 import GridPostList from './GridPostList';
 
 type SearchResultsProps = {
-	isSEARCHFetching: boolean;
+	isSearchFetching: boolean;
 	searchedPosts: Models.Document[];
 };
 
