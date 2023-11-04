@@ -51,7 +51,7 @@ const LeftSidebar = () => {
 						<img
 							src={user.imageUrl || '/assets/icons/profile-placeholder.svg'}
 							alt='profile'
-							className='h-14 w-14 rounded-full'
+							className='h-10 w-10 rounded-full'
 						/>
 						<div className='flex flex-col'>
 							<p className='body-bold'>{user.name}</p>
@@ -60,7 +60,7 @@ const LeftSidebar = () => {
 					</Link>
 				)}
 
-				<ul className='flex flex-col gap-6'>
+				<ul className='flex flex-col gap-4'>
 					{sidebarLinks.map((link: INavLink) => {
 						const isActive = pathname === link.route;
 
