@@ -149,25 +149,23 @@ export async function uploadFile(file: File) {
 
 // ============================== GET FILE URL
 export function getFilePreview(fileId: string) {
-  try {
-    const fileUrl = storage.getFilePreview(
-      appwriteConfig.storageId,
-      fileId,
-      2000,
-      2000,
-      "top",
-      100
-    );
+	try {
+		const fileUrl = storage.getFilePreview(
+			appwriteConfig.storageId,
+			fileId,
+			2000,
+			2000,
+			'top',
+			100
+		);
 
-    if (!fileUrl) throw Error;
+		if (!fileUrl) throw Error;
 
-    return fileUrl;
-  } catch (error) {
-    console.log(error);
-  }
+		return fileUrl;
+	} catch (error) {
+		console.log(error);
+	}
 }
-
-
 
 export async function deleteFile(fileId: string) {
 	try {
@@ -187,4 +185,79 @@ export async function getRecentPost() {
 	);
 	if (!posts) throw Error;
 	return posts;
+}
+
+export async function likePost(postId: string, likesArray: string[]) {
+	try {
+		const updatedPost = await databases.updateDocument(
+			appwriteConfig.databaseId,
+			appwriteConfig.postCollectionId,
+			postId,
+			{
+				likes: likesArray,
+			}
+		);
+
+		if (!updatedPost) throw Error;
+		return updatedPost;
+	} catch (error) {
+		console.log(error);
+	}
+}
+
+
+export async function savePost(postId: string, userId: string) {
+	try {
+		const updatedPost = await databases.createDocument(
+			appwriteConfig.databaseId,
+			appwriteConfig.savesCollectionId,
+			ID.unique(),
+			{
+				user: userId,
+				post: postId
+			}
+		);
+
+		if (!updatedPost) throw Error;
+		return updatedPost;
+	} catch (error) {
+		console.log(error);
+	}
+}
+
+
+export async function deleteSavedPost(savedRecordId: string) {
+	try {
+		const statusCode = await databases.deleteDocument(
+			appwriteConfig.databaseId,
+			appwriteConfig.savesCollectionId,
+			savedRecordId,
+		)
+		if (!statusCode) throw Error;
+		return {status: 'ok'};
+	} catch (error) {
+		console.log(error);
+	}
+}
+
+export async function getUsers(limit?: number) {
+	const queries: any[] = [Query.orderDesc('$createdAt')];
+
+	if (limit) {
+		queries.push(Query.limit(limit));
+	}
+
+	try {
+		const users = await databases.listDocuments(
+			appwriteConfig.databaseId,
+			appwriteConfig.userCollectionId,
+			queries
+		);
+
+		if (!users) throw Error;
+
+		return users;
+	} catch (error) {
+		console.log(error);
+	}
 }

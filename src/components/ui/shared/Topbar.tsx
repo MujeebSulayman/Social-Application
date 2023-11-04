@@ -1,28 +1,32 @@
-import { Link, useNavigate } from 'react-router-dom';
-import { Button } from '../button';
-import { useSignOutAccount } from '@/lib/react-query/queriesAndMutations';
 import { useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+
+
 import { useUserContext } from '@/context/AuthContext';
+import { useSignOutAccount } from '@/lib/react-query/queriesAndMutations';
+import { Button } from '../button';
+
 
 const Topbar = () => {
 	const navigate = useNavigate();
+	const { user } = useUserContext();
 	const { mutate: signOut, isSuccess } = useSignOutAccount();
+
 	useEffect(() => {
 		if (isSuccess) navigate(0);
 	}, [isSuccess]);
-	const { user } = useUserContext();
 
 	return (
 		<section className='topbar'>
-			<div className='flex-between py-4 px5'>
+			<div className='flex-between py-4 px-5'>
 				<Link
 					to='/'
-					className='flex gap-3 items-center ml-4'>
+					className='flex gap-3 items-center'>
 					<img
 						src='/assets/images/logo.svg'
 						alt='logo'
-						height={325}
 						width={130}
+						height={325}
 					/>
 				</Link>
 
@@ -30,19 +34,19 @@ const Topbar = () => {
 					<Button
 						variant='ghost'
 						className='shad-button_ghost'
-						onClick={() => signOut}>
+						onClick={() => signOut()}>
 						<img
 							src='/assets/icons/logout.svg'
 							alt='logout'
 						/>
 					</Button>
 					<Link
-						to={`/profile${user.id}`}
-						className='flex-center gap-3 mr-4'>
+						to={`/profile/${user.id}`}
+						className='flex-center gap-3'>
 						<img
-							src={user.imageUrl || '/assets/icons/profile-placeholder.JPG'}
-							alt='avatar'
-							className='h-10 w-10 rounded-full'
+							src={user.imageUrl || '/assets/icons/profile-placeholder.svg'}
+							alt='profile'
+							className='h-8 w-8 rounded-full'
 						/>
 					</Link>
 				</div>
