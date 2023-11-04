@@ -8,6 +8,7 @@ import {
 } from '@/lib/react-query/queriesAndMutations';
 import { Models } from 'appwrite';
 import { checkIsLiked } from '@/lib/utils';
+import Loader from './Loader';
 
 type PostStatSProps = {
 	post: Models.Document;
@@ -21,8 +22,9 @@ const PostStats = ({ post, userId }: PostStatSProps) => {
 	const [isSaved, setIsSaved] = useState(false);
 
 	const { mutate: likePost } = useLikePost();
-	const { mutate: savePost } = useSavePost();
-	const { mutate: deleteSavedPost } = useDeleteSavedPost();
+	const { mutate: savePost, isPending: isSavingPost } = useSavePost();
+	const { mutate: deleteSavedPost, isPending: isDeletingSaved } =
+		useDeleteSavedPost();
 
 	const { data: currentUser } = useGetCurrentUser();
 	const savedPostRecord = currentUser?.save.find(
@@ -78,16 +80,20 @@ const PostStats = ({ post, userId }: PostStatSProps) => {
 			</div>
 
 			<div className='flex gap-2'>
-				<img
-					src={`${
-						isSaved ? '/assets/icons/saved.svg' : '/assets/icons/save.svg'
-					}`}
-					alt='saved post'
-					width={20}
-					height={20}
-					onClick={handleSavePost}
-					className='cursor-pointer'
-				/>
+				{isSavingPost || isDeletingSaved ? (
+					<Loader />
+				) : (
+					<img
+						src={`${
+							isSaved ? '/assets/icons/saved.svg' : '/assets/icons/save.svg'
+						}`}
+						alt='saved post'
+						width={20}
+						height={20}
+						onClick={handleSavePost}
+						className='cursor-pointer'
+					/>
+				)}
 			</div>
 		</div>
 	);
